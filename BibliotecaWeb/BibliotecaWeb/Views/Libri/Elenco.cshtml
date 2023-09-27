@@ -1,0 +1,209 @@
+﻿@using BibliotecaWeb.Models
+@using BibliotecaWeb.Controllers
+@model List<Utility.Entity>
+
+<!DOCTYPE html>
+<html lang="it" dir="ltr">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2232/2232688.png">
+    <link rel="Stylesheet" type="text/css" href="~/css/Libri/style.css">
+    <script src="https://kit.fontawesome.com/94a5d63a99.js" crossorigin="anonymous"></script>
+    <script src="~/js/Libri/script.js"></script>
+    <script src="~/js/Login/script.js"></script>
+
+    <title>Libreria Web</title>
+</head>
+<body>
+    <script>
+        function confermaEliminazione() {
+            var conferma = confirm("Sei sicuro di voler Eliminare?");
+
+            if (conferma) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+    <header>
+        <div class="topnav">
+            <a href="/Home/Index">Home</a>
+            <a class="active" href="/Libri/Elenco">Lista Libri</a>
+            <a href="/Home/Contatti">Contatti</a>
+            <a href="/Home/AboutUs">Chi Siamo</a>
+
+            <select name="ordina" id="ordina" class="active">
+                <option value="">Ordina Per</option>
+                <option value="titolo">Titolo</option>
+                <option value="disponibile desc">Disponibili</option>
+                <option value="disponibile">Non Disponibili</option>
+                <option value="id desc">Caricato di recente</option>
+                <option value="genere">Genere</option>
+                <option value="numeropagine">Numero pagine +</option>
+                <option value="numeropagine desc">Numero pagine -</option>
+            </select>
+
+            @if (LoginController.amministratoreLoggato != null)
+            {
+                <a href="/Libri/NuovoLibro">Aggiungi Libro</a>
+            }
+            @if (LoginController.amministratoreLoggato == null && LoginController.utenteLoggato == null)
+            {
+                <a href="/Login/Login" id="accedi">Accedi/Registrati</a>
+            }
+            @if (LoginController.amministratoreLoggato != null)
+            {
+                <a href="/Login/Logout" id="accedi">Esci</a>
+                <a href="/MyAccount/MyAccountAdmin" id="accedi">Sei dentro come @LoginController.amministratoreLoggato.Username</a>
+            }
+            @if (LoginController.utenteLoggato != null)
+            {
+                <a href="/Login/Logout" id="accedi">Esci</a>
+                <a href="/MyAccount/MyAccountUtente" id="accedi">Sei dentro come @LoginController.utenteLoggato.Username</a>
+            }
+
+            <a id="cerca"><i class="fa-solid fa-magnifying-glass"><input id="txtfind" type="text" style="display: inline"></input></i></a>
+        </div>
+    </header>
+    <main>
+        <div class="containerlibri" id="containerlibri">
+            @foreach (Libro n in Model)
+            {
+                <div class="containerlibro">
+                    <a href="/Libri/Dettagli?id=@n.Id">
+                        <div class="iconaprodotto">
+                            <img type="img" src="@n.Immagine" onerror="this.src='https://via.placeholder.com/200x300&text=Libro'"
+                                 alt="Immagine">
+                        </div>
+                        <div class="dettaglilibro">
+                            <div class="titolo">
+                                <p>@n.Titolo</p>
+                            </div>
+                            <div class="autore">
+                                <p>@n.Autore</p>
+                            </div>
+                            <div class="genere">
+                                <p>Genere: @n.Genere</p>
+                            </div>
+                            <div class="numeropagine">
+                                <p>Numero pagine: @n.NumeroPagine</p>
+                            </div>
+                            <div class="annopubblicazione">
+                                <p>Anno Pubblicazione: @n.AnnoPubblicazione</p>
+                            </div>
+                            <div class="buttonnegozio">
+                                @if (LoginController.amministratoreLoggato == null && LoginController.utenteLoggato == null)
+                                {
+@*                                    <a href="/Libri/Dettagli?id=@n.Id" id="dettaglibutton">Dettagli</a>
+*@                                }
+                                @if (LoginController.amministratoreLoggato != null)
+                                {
+                                    <a href="/Libri/FormModifica/@n.Id"><input type="button" value="Modifica"></a>
+                                    <a href="/Libri/Elimina/@n.Id" onclick="return confermaEliminazione()"><input type="button" value="Elimina"></a>
+                                }
+                                @if (LoginController.utenteLoggato != null)
+                                {
+                                    if (n.Disponibile)
+                                    {
+                                        <a href="/Libri/PrendiPrestito?idLibro=@n.Id&idUtente=@LoginController.utenteLoggato.Id"><input type="button" value="Prendi in Prestito" style="background-color:greenyellow; color: darkslategrey" /></a>
+                                    }
+                                    else
+                                    {
+                                        if (DAOUtente.GetInstance().VerificaPrestito(@n.Id, LoginController.utenteLoggato.Id))
+                                        {
+                                            <a href="/Libri/ConsegnaPrestito?idLibro=@n.Id&idUtente=@LoginController.utenteLoggato.Id"><input type="button" value="Restituisci" style="background-color:rgb(255, 95, 95); color: antiquewhite" /></a>
+                                        }
+                                        else
+                                        {
+                                            <a><input type="button" value="NON DISPONIBILE" style="background-color:rgb(255, 95, 95); color: antiquewhite" /></a>
+                                        }
+                                    }
+                                    
+                                    bool preferito = false;
+                                    foreach(Libro l in LoginController.utenteLoggato.Preferiti)
+                                    {
+                                        if (l.Id == n.Id)
+                                        {
+                                            preferito = true;
+                                        }
+                                    }
+                                        if(preferito)
+                                        {
+                                        <a href="/Libri/RimuoviDaiPreferiti?idLibro=@n.Id&idUtente=@LoginController.utenteLoggato.Id"><input type="button" value="Remove from Preferiti" style="background-color: #d6ff77; color: darkslategrey"></a>
+                                    }
+                                        else
+                                        {
+                                        <a href="/Libri/AggiungiAiPreferiti?idLibro=@n.Id&idUtente=@LoginController.utenteLoggato.Id"><input type="button" value="Add to Preferiti" style="background-color: #297788; color: antiquewhite"></a>
+                                        }
+                                }
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </main>
+    <footer>
+        <div id="footer">
+            <p>© Copyright 2023 by Generation - Proudly powered by Gruppo-1®</p>
+        </div>
+    </footer>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const ricerca = urlParams.get('ricerca');
+
+        // Funzione per filtrare l'elenco dei libri in base al titolo
+        function filtraLibri() {
+            const input = document.getElementById('txtfind').value.toLowerCase();          
+            const elencoLibri = document.getElementById('containerlibri');
+            const datilibri = elencoLibri.getElementsByClassName('containerlibro')
+            for(let i = 0; i < datilibri.length; i++)
+            {
+                const libri = datilibri[i].getElementsByTagName('p');
+                for (let j = 0; j < libri.length; j++) {
+                    const titoloLibro = libri[j].textContent.toLowerCase();
+                    if (titoloLibro.includes(input)) {
+                        datilibri[i].style.display = 'block';
+                        break;
+                    } else {
+                        datilibri[i].style.display = 'none';
+                    }
+                }
+            }
+            
+        }
+
+        // Aggiungi un gestore di eventi al pulsante "Cerca"
+        const cercaButton = document.getElementById('cerca');
+        cercaButton.addEventListener('click', filtraLibri);
+
+        // Aggiungi anche un gestore di eventi all'input per attivare la ricerca durante l'input (opzionale)
+        const inputRicerca = document.getElementById('txtfind');
+        inputRicerca.addEventListener('input', filtraLibri);
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var currentURL = window.location.href;
+            var select = document.getElementById("ordina");
+            var options = select.options;
+
+            for (var i = 0; i < options.length; i++) {
+                var option = options[i];
+                if (currentURL.includes("?tipo=" + option.value)) {
+                    option.selected = true;
+                    break;
+                }
+            }
+        });
+        document.getElementById("ordina").addEventListener("change", function () {
+            var selectedOption = this.value;
+            if (selectedOption !== "") {
+                window.location.href = "/Libri/Elenco?tipo=" + selectedOption;
+            }
+        });
+
+    </script>
+</body>
+</html>

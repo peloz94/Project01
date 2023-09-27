@@ -1,0 +1,143 @@
+﻿@using BibliotecaWeb.Models
+@using BibliotecaWeb.Controllers
+
+
+<!DOCTYPE html>
+<html lang="it" dir="ltr">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2232/2232688.png">
+    <link rel="Stylesheet" type="text/css" href="~/css/Libri/style.css">
+    <script src="https://kit.fontawesome.com/94a5d63a99.js" crossorigin="anonymous"></script>
+    <script src="~/js/Libri/script.js"></script>
+    <title>Crea Nuovo Libro</title>
+</head>
+<body>
+    <header>
+        <div class="topnav">
+            <a href="/Home/Index">Home</a>
+            <a href="/Libri/Elenco">Lista Libri</a>
+            <a href="/Home/Contatti">Contatti</a>
+            <a href="/Home/AboutUs">Chi Siamo</a>
+            @if (LoginController.amministratoreLoggato != null)
+            {
+                <a href="/Libri/NuovoLibro">Aggiungi Libro</a>
+            }
+            @if (LoginController.amministratoreLoggato == null && LoginController.utenteLoggato == null)
+            {
+                <a href="/Login/Login" id="accedi">Accedi/Registrati</a>
+            }
+            @if (LoginController.amministratoreLoggato != null)
+            {
+                <a href="/Login/Logout" id="accedi">Esci</a>
+                <a href="/MyAccount/MyAccountAdmin" id="accedi">Sei dentro come @LoginController.amministratoreLoggato.Username</a>
+            }
+            @if (LoginController.utenteLoggato != null)
+            {
+                <a href="/Login/Logout" id="accedi">Esci</a>
+                <a href="/MyAccount/MyAccountUtente" id="accedi">Sei dentro come @LoginController.utenteLoggato.Username</a>
+            }
+
+            <a onclick="MostraTextBox()" onmouseleave="NascondiTextBox()" id="cerca"><i class="fa-solid fa-magnifying-glass"><input id="txtfind" type="text" onfocus="reindireizza()"></input></i></a>
+        </div>
+    </header>
+    <main>
+        <form action="/Libri/AggiungiLibro" id="FormLibro">
+            <table id="tabellanuovo">
+                <th id="addlibro" colspan="2">
+                    Aggiungi libro
+                </th>
+                <tr>
+                    <td>
+                        Titolo:
+                    </td>
+                    <td>
+                        <input type="text" name="titolo" id="titolo" placeholder="Titolo" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Autore:
+                    </td>
+                    <td>
+                        <input type="text" name="autore" id="autore" placeholder="Autore" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Genere:
+                    </td>
+                    <td>
+                        <input type="text" name="genere" id="genere" placeholder="Genere" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        NumeroPagine:
+                    </td>
+                    <td>
+                        <input type="number" name="numeropagine" id="numeropagine" placeholder="Numero Pagine" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Immagine:
+                    </td>
+                    <td>
+                        <input type="text" name="immagine" id="immagine" placeholder="Link Immagine" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Disponibile :
+                    </td>
+                    <td>
+                        <select name="disponibile">
+                            <option value="True">Disponibile</option>
+                            <option value="False">Non Disponibile</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Anno Pubblicazione:
+                    </td>
+                    <td>
+                        <input type="number" name="annopubblicazione" id="annopubblicazione" placeholder="Anno di Pubblicazione" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Trama:
+                    </td>
+                    <td>
+                        <textarea id="trama" name="trama" rows="4" cols="50">Trama Libro</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td >
+                        <input type="button" value="Pulisci" id="accediBottone" onclick="Pulisci()" />
+                    </td>
+                    <td>
+                        <input href="/Libri/Elenco" type="submit" value="Aggiungi" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+    </main>
+
+    <footer>
+        <div id="footer">
+            <p>© Copyright 2023 by Generation - Proudly powered by Gruppo-1®</p>
+        </div>
+    </footer>
+</body>
+<script>
+    function Pulisci() {
+        return document.getElementById("FormLibro").reset()
+    }
+</script>
+</html>
+

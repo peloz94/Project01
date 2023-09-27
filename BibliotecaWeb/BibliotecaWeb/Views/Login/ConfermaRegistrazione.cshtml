@@ -1,0 +1,55 @@
+﻿@using BibliotecaWeb.Controllers
+<!DOCTYPE html>
+<html lang="it" dir="ltr">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2232/2232688.png">
+    <link rel="Stylesheet" type="text/css" href="~/css/Login/style.css">
+    <script src="https://kit.fontawesome.com/94a5d63a99.js" crossorigin="anonymous"></script>
+    <script src="~/js/Login/script.js"></script>
+    <script src="~/js/MyAccount/Menu.js"></script>
+
+    <title>Libreria Web</title>
+</head>
+<body>
+    <header>
+        <div class="topnav">
+            <a class="active" href="/Home/Index">Home</a>
+            <a href="/Libri/Elenco">Lista Libri</a>
+            <a href="/Home/Contatti">Contatti</a>
+            <a href="/Home/AboutUs">Chi Siamo</a>
+            @if (LoginController.amministratoreLoggato != null)
+            {
+                <a href="/Libri/NuovoLibro">Aggiungi Libro</a>
+            }
+            @if (LoginController.amministratoreLoggato == null && LoginController.utenteLoggato == null)
+            {
+                <a href="/Login/Login" id="accedi">Accedi/Registrati</a>
+            }
+            @if (LoginController.amministratoreLoggato != null)
+            {
+                <a href="/Login/Logout" id="accedi">Esci</a>
+                <a href="/MyAccount/MyAccountAdmin" id="accedi">Sei dentro come @LoginController.amministratoreLoggato.Username</a>
+            }
+            @if (LoginController.utenteLoggato != null)
+            {
+                <a href="/Login/Logout" id="accedi">Esci</a>
+                <a href="/MyAccount/MyAccountUtente" id="accedi">Sei dentro come @LoginController.utenteLoggato.Username</a>
+            }
+
+            <a onclick="MostraTextBox()" onmouseleave="NascondiTextBox()" id="cerca"><i class="fa-solid fa-magnifying-glass"><input id="txtfind" type="text" onfocus="reindireizza()"></input></i></a>
+        </div>
+    </header>
+    <main>
+        <h3>Registrazione avvenuta con successo</h3>
+        <a class="active" href="/Login/Login"><input type="button" value="Vai Al Login" /></a>
+    </main>
+    <footer>
+        <div id="footer">
+            <p>© Copyright 2023 by Generation - Proudly powered by Gruppo-1®</p>
+        </div>
+    </footer>
+</body>
+</html>
+

@@ -1,0 +1,87 @@
+﻿@using BibliotecaWeb.Models
+@using BibliotecaWeb.Controllers
+@model List<Utility.Entity>
+
+<!DOCTYPE html>
+<html lang="it" dir="ltr">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2232/2232688.png">
+    <link rel="Stylesheet" type="text/css" href="~/css/Home/style.css">
+    <script src="https://kit.fontawesome.com/94a5d63a99.js" crossorigin="anonymous"></script>
+    <script src="~/js/Home/script.js"></script>
+    <title>Libreria Web</title>
+</head>
+<body>
+    <header>
+        <div class="topnav">
+            <a class="active" href="/Home/Index">Home</a>
+            <a href="/Libri/Elenco">Lista Libri</a>
+            <a href="/Home/Contatti">Contatti</a>
+            <a href="/Home/AboutUs">Chi Siamo</a>
+            @if (LoginController.amministratoreLoggato != null)
+            {
+                <a href="/Libri/NuovoLibro">Aggiungi Libro</a>
+            }
+            @if (LoginController.amministratoreLoggato == null && LoginController.utenteLoggato == null)
+            {
+                <a href="/Login/Login" id="accedi">Accedi/Registrati</a>
+            }
+            @if (LoginController.amministratoreLoggato != null)
+            {
+                <a href="/Login/Logout" id="accedi">Esci</a>
+                <a href="/MyAccount/MyAccountAdmin" id="accedi">Sei dentro come @LoginController.amministratoreLoggato.Username</a>
+            }
+            @if (LoginController.utenteLoggato != null)
+            {
+                <a href="/Login/Logout" id="accedi">Esci</a>
+                <a href="/MyAccount/MyAccountUtente" id="accedi">Sei dentro come @LoginController.utenteLoggato.Username</a>
+            }
+
+            <a onclick="MostraTextBox()" onmouseleave="NascondiTextBox()" id="cerca"><i class="fa-solid fa-magnifying-glass"><input id="txtfind" type="text" onfocus="reindireizza()"></input></i></a>
+          
+        </div>
+    </header>
+    <h1>BENVENUTO NELLA LIBRERIA WEB</h1>
+    <div class="howtowork">
+        <h3>Come Funziona</h3>
+        <p>In questo sito potrai usufruire gratuitamente dei libri a nostra disposizione.</p>
+        <p>Sfoglia il catalogo, o cerca per tiolo o nome autore il libro che ti interessa,</p>
+        <p>una volta deciso noleggialo.</p>
+        <p>Ti serve un account per noleggiare, non hai ancora un account?</p>
+        @if (LoginController.utenteLoggato == null && LoginController.amministratoreLoggato == null)
+        {
+            <a href="/Login/Registrazione"><input class="bottone" type="button" value="Registrati ora"></input></a>
+        }
+    </div>
+    <h3>I Più Visti</h3>
+    <div class="featured">
+        @foreach(Libro l in Model)
+        {
+            <img type="img" src="@l.Immagine" onerror="this.src='https://via.placeholder.com/874x1240&text=Libro'" alt="Immagine">
+        }
+    </div>
+    <a href="/Libri/Elenco">
+        <input class="bottone" type="button" value="Vedi La Lista Completa"></input>
+    </a>
+
+    <div id="cookie-popup" class="popup">
+        <div class="popup-content">
+            <span>Questo sito utilizza i cookie per migliorare l'esperienza dell'utente.</span>
+            <button id="accept-cookie-button">Accetta</button>
+        </div>
+    </div>
+
+    <footer>
+        <div id="footer">
+            <p>© Copyright 2023 by Generation - Proudly powered by Gruppo-1®</p>
+        </div>
+    </footer>
+</body>
+<script>
+    function reindireizza() {
+        window.location.href = "/Libri/Elenco";
+    }
+</script>
+</html>

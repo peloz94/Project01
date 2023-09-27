@@ -1,0 +1,124 @@
+﻿@using BibliotecaWeb.Models
+@using BibliotecaWeb.Controllers
+@model List<Utility.Entity>
+
+<!DOCTYPE html>
+<html lang="it" dir="ltr">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2232/2232688.png">
+    <link rel="Stylesheet" type="text/css" href="~/css/Home/style.css">
+    <script src="https://kit.fontawesome.com/94a5d63a99.js" crossorigin="anonymous"></script>
+    <script src="~/js/MyAccount/Menu.js"></script>
+    <title>Libreria Web</title>
+</head>
+<body>
+    <header>
+        <div class="topnav">
+            <a class="active" href="/Home/Index">Home</a>
+            <a href="/Libri/Elenco">Lista Libri</a>
+            <a href="/Home/Contatti">Contatti</a>
+            <a href="/Home/AboutUs">Chi Siamo</a>
+            @if (LoginController.amministratoreLoggato != null)
+            {
+                <a href="/Libri/NuovoLibro">Aggiungi Libro</a>
+            }
+            @if (LoginController.amministratoreLoggato == null && LoginController.utenteLoggato == null)
+            {
+                <a href="/Login/Login" id="accedi">Accedi/Registrati</a>
+            }
+            @if (LoginController.amministratoreLoggato != null)
+            {
+                <a href="/Login/Logout" id="accedi">Esci</a>
+                <a href="/MyAccount/MyAccountAdmin" id="accedi">Sei dentro come @LoginController.amministratoreLoggato.Username</a>
+            }
+            @if (LoginController.utenteLoggato != null)
+            {
+                <a href="/Login/Logout" id="accedi">Esci</a>
+                <a href="/MyAccount/MyAccountUtente" id="accedi">Sei dentro come @LoginController.utenteLoggato.Username</a>
+            }
+
+            <a onclick="MostraTextBox()" onmouseleave="NascondiTextBox()" id="cerca"><i class="fa-solid fa-magnifying-glass"><input id="txtfind" type="text" onfocus="reindireizza()"></input></i></a>
+        </div>
+    </header>
+    <main>
+        <table>
+            <th colspan="6">
+                <h2>Utenti</h2>
+            </th>
+
+            <tr>
+                <td><h3>Username</h3></td>
+                <td><h3>Nome</h3></td>
+                <td><h3>Cognome</h3></td>
+                <td><h3>Email</h3></td>
+                <td><h3>Dob</h3></td>
+                <td><h3>Indirizzo</h3></td>
+            </tr>
+            @foreach(Utente u in Model)
+            {
+                <tr>
+                    <td>@u.Username</td>
+                    <td>@u.Nome</td>
+                    <td>@u.Cognome</td>
+                    <td>@u.Email</td>
+                    <td>@u.Dob</td>
+                    <td>@u.Indirizzo</td>
+                    <!-- <td><input type="button" value="Visualizza Prestiti in corso" onclick="mostraNascondi()"/></td> -->
+                </tr>
+            }
+        </table>
+
+    </main>
+    <footer>
+        <div id="footer">
+            <p>© Copyright 2023 by Generation - Proudly powered by Gruppo-1®</p>
+        </div>
+    </footer>
+</body>
+</html>
+
+@*<div>
+    <table id="prestiti@(u.Id)" style="display: none">
+        <tr>
+            <td>Username</td>
+            <td>Nome</td>
+            <td>Cognome</td>
+            <td>Libro</td>
+            <td>Autore</td>
+            <td>Data Di Ritiro</td>
+            <td>Data Di Consegna</td>
+        </tr>
+        @foreach (Prestito p in DAOPrestito.GetInstance().ListaPrestiti(u.Id))
+        {
+            if (p.DataConsegna.Year == 0001)
+            {
+                <tr>
+                    <td>@p.Utente.Username</td>
+                    <td>@p.Utente.Nome</td>
+                    <td>@p.Utente.Cognome</td>
+                    <td>@p.Libro.Titolo</td>
+                    <td>@p.Libro.Autore</td>
+                    <td>@p.DataRitito.ToString("dd-MM-yyyy")</td>
+                    <td>DA RESTITUIRE</td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+<script>
+    function mostraNascondi(i) {
+        console.log(i);
+        var prestiti = document.getElementById("prestitiincorso" + i);
+
+        if (prestiti.style.display === "none" || prestiti.style.display === "") {
+            prestiti.style.display = "block";
+        } else {
+            prestiti.style.display = "none";
+        }
+    }
+            }
+</script>
+*@
+

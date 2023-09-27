@@ -1,0 +1,150 @@
+﻿@using BibliotecaWeb.Models
+@using BibliotecaWeb.Controllers
+@model Utility.Entity
+<link rel="stylesheet" type="text/css" href="" />
+
+<!DOCTYPE html>
+<html lang="it" dir="ltr">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2232/2232688.png">
+    <link rel="Stylesheet" type="text/css" href="~/css/Libri/style.css">
+    <script src="https://kit.fontawesome.com/94a5d63a99.js" crossorigin="anonymous"></script>
+    <script src="~/js/Libri/script.js"></script>
+    <script src="~/js/Login/script.js"></script>
+    <title>Libreria Web</title>
+</head>
+<body>
+    <script>
+        function confermaEliminazione() {
+            var conferma = confirm("Sei sicuro di voler Eliminare?");
+
+            if (conferma) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+    <header>
+        <div class="topnav">
+            <a href="/Home/Index">Home</a>
+            <a href="/Libri/Elenco">Lista Libri</a>
+            <a href="/Home/Contatti">Contatti</a>
+            <a href="/Home/AboutUs">Chi Siamo</a>
+            @if (LoginController.amministratoreLoggato != null)
+            {
+                <a href="/Libri/NuovoLibro">Aggiungi Libro</a>
+            }
+            @if (LoginController.amministratoreLoggato == null && LoginController.utenteLoggato == null)
+            {
+                <a href="/Login/Login" id="accedi">Accedi/Registrati</a>
+            }
+            @if (LoginController.amministratoreLoggato != null)
+            {
+                <a href="/Login/Logout" id="accedi">Esci</a>
+                <a href="/MyAccount/MyAccountAdmin" id="accedi">Sei dentro come @LoginController.amministratoreLoggato.Username</a>
+            }
+            @if (LoginController.utenteLoggato != null)
+            {
+                <a href="/Login/Logout" id="accedi">Esci</a>
+                <a href="/MyAccount/MyAccountUtente" id="accedi">Sei dentro come @LoginController.utenteLoggato.Username</a>
+            }
+
+            <a onclick="MostraTextBox()" onmouseleave="NascondiTextBox()" id="cerca"><i class="fa-solid fa-magnifying-glass"><input id="txtfind" type="text" onfocus="reindireizza()"></input></i></a>
+        </div>
+    </header>
+    <main id="dettaglilibro">
+        <div id="singololibro">
+            <h1>@(((Libro)Model).Titolo)</h1>
+            <img type="img" src="@(((Libro)Model).Immagine)" onerror="this.src='https://via.placeholder.com/200x300&text=Libro'"
+                 alt="Immagine">
+            <h3>@(((Libro)Model).Autore)</h3>
+            <h3>Genere: @(((Libro)Model).Genere)</h3>
+            <h3>Numero Pagine: @(((Libro)Model).NumeroPagine)</h3>
+            <h3>Anno Pubblicazione: @(((Libro)Model).AnnoPubblicazione)</h3>
+            <h3 onclick="mostraTrama()" id="leggitrama">Leggi la Trama</h3>
+            <div class="buttonnegozio">
+                @if (LoginController.utenteLoggato == null)
+                {
+                    if (((Libro)Model).Disponibile)
+                    {
+                        <a><input type="button" value="Disponibile" style="background-color:greenyellow; color: darkslategrey" /></a>
+                    }
+                    if (((Libro)Model).Disponibile == false)
+                    {
+                        <a><input type="button" value="Non Disponibile" style="background-color:rgb(255, 95, 95); color: antiquewhite" /></a>
+
+                    }
+                }
+                @if (LoginController.amministratoreLoggato == null && LoginController.utenteLoggato == null)
+                {
+                }
+                @if (LoginController.amministratoreLoggato != null)
+                {
+                    <a href="/Libri/FormModifica/@(((Libro)Model).Id)"><input type="button" value="Modifica"></a>
+                    <a href="/Libri/Elimina/@(((Libro)Model).Id)" onclick="return confermaEliminazione()"><input type="button" value="Elimina"></a>
+                }
+                @if (LoginController.utenteLoggato != null)
+                {
+                    if (((Libro)Model).Disponibile)
+                    {
+                        <a href="/Libri/PrendiPrestito?idLibro=@(((Libro)Model).Id)&idUtente=@LoginController.utenteLoggato.Id"><input type="button" value="Prendi in Prestito" style="background-color:greenyellow; color: darkslategrey" /></a>
+                    }
+                    else
+                    {
+                        if (DAOUtente.GetInstance().VerificaPrestito(((Libro)Model).Id, LoginController.utenteLoggato.Id))
+                        {
+                            <a href="/Libri/ConsegnaPrestito?idLibro=@(((Libro)Model).Id)&idUtente=@LoginController.utenteLoggato.Id"><input type="button" value="Restituisci" style="background-color:rgb(255, 95, 95); color: antiquewhite" /></a>
+                        }
+                        else
+                        {
+                            <a href="#"><input type="button" value="NON DISPONIBILE" style="background-color:rgb(255, 95, 95); color: antiquewhite" /></a>
+                        }
+                    }
+                    bool preferito = false;
+                    foreach (Libro l in LoginController.utenteLoggato.Preferiti)
+                    {
+                        if (l.Id == ((Libro)Model).Id)
+                        {
+                            preferito = true;
+                        }
+                    }
+                    if (preferito)
+                    {
+                        <a href="/Libri/RimuoviDaiPreferiti?idLibro=@(((Libro)Model).Id)&idUtente=@LoginController.utenteLoggato.Id"><input type="button" value="Remove from Preferiti" style="background-color: #d6ff77; color: darkslategrey"></a>
+                    }
+                    else
+                    {
+                        <a href="/Libri/AggiungiAiPreferiti?idLibro=@(((Libro)Model).Id)&idUtente=@LoginController.utenteLoggato.Id"><input type="button" value="Add to Preferiti" style="background-color: #297788; color: antiquewhite"></a>
+                    }
+                }
+            </div>
+        </div>
+        <div id="trama" style="display: none" onclick="nascondiTrama()">
+            <h3>
+                Trama
+            </h3>
+            <p>
+                @(((Libro)Model).Trama)
+            </p>
+            <p id="hidebutton">Click to hide</p>
+        </div>
+    </main>
+    <footer>
+        <div id="footer">
+            <p>© Copyright 2023 by Generation - Proudly powered by Gruppo-1®</p>
+        </div>
+    </footer>
+</body>
+<script>
+    function mostraTrama()
+    {
+        document.getElementById("trama").style.display = "block";
+    }
+    function nascondiTrama() {
+        document.getElementById("trama").style.display = "none";
+    }
+</script>
+</html>

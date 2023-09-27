@@ -1,0 +1,149 @@
+﻿@using BibliotecaWeb.Models
+@using BibliotecaWeb.Controllers
+@model List<Utility.Entity>
+
+<!DOCTYPE html>
+<html lang="it" dir="ltr">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2232/2232688.png">
+    <link rel="Stylesheet" type="text/css" href="~/css/Login/style.css">
+    <script src="https://kit.fontawesome.com/94a5d63a99.js" crossorigin="anonymous"></script>
+    <script src="~/js/Login/script.js"></script>
+    <script src="~/js/MyAccount/Menu.js"></script>
+
+    <title>Libreria Web</title>
+</head>
+<body>
+    <header>
+        <div class="topnav">
+            <a class="active" href="/Home/Index">Home</a>
+            <a href="/Libri/Elenco">Lista Libri</a>
+            <a href="/Home/Contatti">Contatti</a>
+            <a href="/Home/AboutUs">Chi Siamo</a>
+            @if (LoginController.amministratoreLoggato != null)
+            {
+                <a href="/Libri/NuovoLibro">Aggiungi Libro</a>
+            }
+            @if (LoginController.amministratoreLoggato == null && LoginController.utenteLoggato == null)
+            {
+                <a href="/Login/Login" id="accedi">Accedi/Registrati</a>
+            }
+            @if (LoginController.amministratoreLoggato != null)
+            {
+                <a href="/Login/Logout" id="accedi">Esci</a>
+                <a href="/MyAccount/MyAccountAdmin" id="accedi">Sei dentro come @LoginController.amministratoreLoggato.Username</a>
+            }
+            @if (LoginController.utenteLoggato != null)
+            {
+                <a href="/Login/Logout" id="accedi">Esci</a>
+                <a href="/MyAccount/MyAccountUtente" id="accedi">Sei dentro come @LoginController.utenteLoggato.Username</a>
+            }
+
+            <a onclick="MostraTextBox()" onmouseleave="NascondiTextBox()" id="cerca"><i class="fa-solid fa-magnifying-glass"><input id="txtfind" type="text" onfocus="reindireizza()"></input></i></a>
+        </div>
+    </header>
+    <main>
+        <form action="/Login/Salva" onsubmit="return controlli_Registrazione()" id="FormRegistrazione" method="post">
+            <table>
+                <th colspan="2">
+                    Registrazione nuovo utente
+                </th>
+                <tr>
+                    <td>
+                        <label for="username">Username: </label>
+                    </td>
+                    <td>
+                        <input type="text" id="username" name="username" class="username" placeholder="Username" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="email">Email: </label>
+                    </td>
+                    <td>
+                        <input type="email" id="email" name="email" class="email" placeholder="Email" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="password">Password: </label>
+                    </td>
+                    <td>
+                        <input type="password" id="password" name="passw" class="password" placeholder="Password" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="password2">Verifica Password: </label>
+                    </td>
+                    <td>
+                        <input type="password" id="password2" class="password" placeholder="Verifica Password" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="amministratore">Amministratore: </label>
+                    </td>
+                    <td>
+                        <input type="text" id="amministratore" name="amministratore" class="amministratore" placeholder="Amministratore" value="true" readonly required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="nome">Nome: </label>
+                    </td>
+                    <td>
+                        <input type="text" id="nome" name="nome" class="nome" placeholder="Nome" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="cognome">Cognome: </label>
+                    </td>
+                    <td>
+                        <input type="text" id="cognome" name="cognome" class="cognome" placeholder="Cognome" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="dob">Data di nascita: </label>
+                    </td>
+                    <td>
+                        <input type="date" id="dob" name="dob" class="dob" placeholder="Data di nascita" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="indirizzo">Indirizzo: </label>
+                    </td>
+                    <td>
+                        <input type="text" id="indirizzo" name="indirizzo" class="indirizzo" placeholder="Indirizzo" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="/Home/Index"><input type="button" value="Torna alla Home" id="HomeButton" /></a>
+                    </td>
+                    <td>
+                        <input type="button" value="Pulisci" id="accediBottone" onclick="Pulisci()" />
+
+                        <input type="submit" value="Salva" id="accediBottone" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </main>
+    <footer>
+        <div id="footer">
+            <p>© Copyright 2023 by Generation - Proudly powered by Gruppo-1®</p>
+        </div>
+    </footer>
+</body>
+<script>
+    function Pulisci() {
+        return document.getElementById("FormRegistrazione").reset()
+    }
+</script>
+</html>

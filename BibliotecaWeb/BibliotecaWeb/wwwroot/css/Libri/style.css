@@ -1,0 +1,247 @@
+﻿html, body {
+    height: 100%;
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: #e8e1d7;
+}
+
+.topnav {
+    overflow: hidden;
+    background-color: #e4d5b7;
+}
+
+    .topnav select{
+        font-weight: bold;
+        border: none;
+    }
+
+    .topnav a, .topnav select {
+        text-decoration: none;
+        float: left;
+        color: rgb(102, 102, 102);
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+        background-color: #e4d5b7;
+    }
+
+        .topnav a:hover, .topnav select:hover {
+            background-color: #d6ff77;
+            color: rgb(102, 102, 102);
+        }
+
+        .topnav a.active {
+            background-color: #d6ff77;
+            color: rgb(102, 102, 102);
+        }
+
+#accedi {
+    float: right;
+}
+
+#cerca {
+    float: right;
+}
+
+    #cerca input {
+        margin: 0px 10px 0px 10px;
+        border-radius: 5px;
+        border: none;
+        display: none;
+    }
+
+h1, h3 {
+    text-align: center;
+    color: rgb(66, 66, 66);
+    ;
+}
+
+#addlibro {
+    text-align: center;
+    color: rgb(66, 66, 66);
+    padding-bottom: 20px;
+}
+
+.howtowork {
+    border-radius: 10px;
+    margin: auto;
+    background-color: #e4d5b7;
+    width: 30%;
+    text-align: center;
+    padding: 30px;
+}
+
+input[type=button] {
+    font-weight: bold;
+    background-color: white;
+    color: rgb(102, 102, 102);
+    border-radius: 10px;
+    padding: 10px;
+    border: none;
+}
+
+.containerlibri {
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+    .containerlibri img {
+        opacity: 50%;
+        width: 300px;
+        margin: 0px 10px 0px 10px;
+        border-radius: 10px;
+    }
+
+.containerlibro {
+    flex: 20%;
+}
+
+    .containerlibro img:hover {
+        opacity: 100%;
+
+    }
+
+#footer {
+    margin-top: 50px;
+    padding: 20px;
+    text-align: center;
+    background-color: #e4d5b7;
+    color: rgb(102, 102, 102);
+    height: auto;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.bottone {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+}
+
+    .bottone:hover {
+        background-color: #d6ff77;
+        color: rgb(102, 102, 102);
+    }
+
+.containerlibro {
+    text-align: center;
+    background-color: #e4d5b7;
+    margin: 40px;
+    padding: 5px;
+    border-radius: 10px;
+    padding-top: 30px;
+}
+
+.buttonnegozio {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+    .buttonnegozio input[type=button] {
+        font-weight: bold;
+        background-color: white;
+        color: rgb(102, 102, 102);
+        border-radius: 10px;
+        padding: 10px;
+        border: none;
+        margin: 0px 10px 10px 10px;
+    }
+
+        .buttonnegozio input[type=button]:hover {
+            background-color: #d6ff77;
+            color: rgb(102, 102, 102);
+        }
+
+.dettaglilibro p {
+    color: rgb(102, 102, 102);
+}
+
+.containerlibro a {
+    text-decoration: none;
+}
+
+#tabellanuovo {
+    margin: auto;
+    margin-top: 70px;
+    background-color: #e4d5b7;
+    padding: 40px;
+    border-radius: 10%;
+    margin-bottom: 100px;
+}
+
+input[type=submit], input[type=button] {
+    font-weight: bold;
+    background-color: white;
+    color: rgb(102, 102, 102);
+    border-radius: 10px;
+    padding: 10px;
+    border: none;
+    margin: 20px 0px -20px 0px;
+}
+
+    input[type=submit]:hover, input[type=button]:hover {
+        background-color: #d6ff77;
+        color: rgb(102, 102, 102);
+    }
+
+#singololibro {
+    text-align: center;
+    margin: auto;
+    background-color: #e4d5b7;
+    width: 30%;
+    padding: 20px;
+    padding-bottom: 40px;
+    border-radius: 10px;
+    margin-bottom: 50px;
+}
+
+    #singololibro img {
+        width: 50%;
+    }
+
+#dettaglilibro {
+    margin-top: 50px;
+    display: flex;
+    align-content: center;
+    justify-items: center;
+}
+#trama {
+    text-align: center;
+    margin: auto;
+    background-color: #e4d5b7;
+    width: 30%;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 0px;
+    font-weight: normal;
+    font-size: 16px;
+}
+#leggitrama {
+    color: rgb(102, 102, 102);
+}
+#leggitrama:hover {
+    color: antiquewhite;
+    cursor: pointer;
+}
+#hidebutton{
+    font-size: 8px;
+    margin-bottom: 0px;
+    margin-right: 0px;
+    text-align:right;
+}
+    #hidebutton:hover{
+        cursor:pointer;
+    }
+
+#tabellanuovo #trama{
+    background-color: #FFFFFF;
+}

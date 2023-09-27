@@ -1,0 +1,99 @@
+﻿html, body {
+    height: 100%;
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: #e8e1d7;
+}
+
+.topnav {
+    overflow: hidden;
+    background-color: #e4d5b7;
+}
+
+    .topnav a {
+        text-decoration: none;
+        float: left;
+        color: rgb(102, 102, 102);
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+        .topnav a:hover {
+            background-color: #d6ff77;
+            color: rgb(102, 102, 102);
+        }
+
+        .topnav a.active {
+            background-color: #d6ff77;
+            color: rgb(102, 102, 102);
+        }
+
+#accedi {
+    float: right;
+}
+
+#cerca {
+    float: right;
+}
+
+    #cerca input {
+        margin: 0px 10px 0px 10px;
+        border-radius: 5px;
+        border: none;
+        display: none;
+    }
+
+h1, h3 {
+    text-align: center;
+    color: rgb(66, 66, 66);
+    ;
+}
+
+input[type=button], input[type=submit] {
+    font-weight: bold;
+    background-color: white;
+    color: rgb(102, 102, 102);
+    border-radius: 10px;
+    padding: 10px;
+    border: none;
+}
+
+#footer {
+    margin-top: 50px;
+    padding: 20px;
+    text-align: center;
+    background-color: #e4d5b7;
+    height: auto;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.bottone {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+}
+
+    .bottone:hover {
+        background-color: #d6ff77;
+        color: rgb(102, 102, 102);
+    }
+
+#FormLogin, #FormRegistrazione {
+    background-color: #e4d5b7;
+    padding: 20px;
+    border-radius: 10px;
+    margin: auto;
+    margin-top: 200px;
+    margin-bottom: 200px;
+}
+#FormRegistrazione{
+    width: fit-content;
+}

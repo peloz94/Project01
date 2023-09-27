@@ -1,0 +1,197 @@
+﻿a {
+    text-decoration: none;
+}
+
+body {
+    margin: 0;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: #e8e1d7;
+}
+
+.topnav {
+    overflow: hidden;
+    background-color: #e4d5b7;
+}
+
+    .topnav a {
+        text-decoration: none;
+        float: left;
+        color: rgb(102, 102, 102);
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+        .topnav a:hover {
+            background-color: #d6ff77;
+            color: rgb(102, 102, 102);
+        }
+
+        .topnav a.active {
+            background-color: #d6ff77;
+            color: rgb(102, 102, 102);
+        }
+
+#accedi {
+    float: right;
+}
+
+#cerca {
+    float: right;
+}
+
+    #cerca input {
+        margin: 0px 10px 0px 10px;
+        border-radius: 5px;
+        border: none;
+        display: none;
+    }
+
+h1, h3 {
+    text-align: center;
+    color: rgb(66, 66, 66);
+    ;
+}
+
+.howtowork {
+    border-radius: 10px;
+    margin: auto;
+    background-color: #e4d5b7;
+    width: 30%;
+    text-align: center;
+    padding: 30px;
+}
+
+input[type=button]{
+    font-weight: bold;
+    background-color: white;
+    color: rgb(102, 102, 102);
+    border-radius: 10px;
+    padding: 10px;
+    border: none;
+}
+#FormLibro input[type=submit] {
+    font-weight: bold;
+    background-color: white;
+    color: rgb(102, 102, 102);
+    border-radius: 10px;
+    padding: 10px;
+    border: none;
+}
+
+.featured {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+    .featured img {
+        opacity: 50%;
+        width: 20%;
+        margin: 0px 10px 0px 10px;
+        border-radius: 10px;
+    }
+
+        .featured img:hover {
+            opacity: 100%;
+        }
+
+#footer {
+    margin-top: 50px;
+    padding: 20px;
+    text-align: center;
+    background-color: #e4d5b7;
+    height: auto;
+}
+
+.bottone {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+}
+
+    .bottone:hover {
+        background-color: #d6ff77;
+        color: rgb(102, 102, 102);
+    }
+
+
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.contact-form {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+    .contact-form input, .contact-form textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .contact-form button {
+        font-weight: bold;
+        background-color: white;
+        color: rgb(102, 102, 102);
+        border-radius: 10px;
+        padding: 10px;
+        border: none;
+    }
+
+        .contact-form button:hover {
+            background-color: #d6ff77;
+            color: rgb(102, 102, 102);
+        }
+
+
+main {
+    background-color: #e4d5b7;
+    color: rgb(102, 102, 102);
+    width: 50%;
+    margin: auto;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    padding: 50px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+
+.popup {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 20px;
+    background-color: #e4d5b7;
+    color: rgb(102, 102, 102);
+    ;
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px #000000;
+}
+
+.popup-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#accept-cookie-button {
+    padding: 10px 20px;
+    border: none;
+    background-color: white;
+    border-radius: 10px;
+    margin-left: 10px;
+}
+
+    #accept-cookie-button:hover {
+        background-color: #d6ff77;
+        color: rgb(102, 102, 102);
+    }

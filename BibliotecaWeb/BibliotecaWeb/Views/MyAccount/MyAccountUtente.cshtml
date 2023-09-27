@@ -1,0 +1,85 @@
+﻿@using BibliotecaWeb.Models
+@using BibliotecaWeb.Controllers
+@model Utility.Entity
+<link rel="stylesheet" type="text/css" href="" />
+
+<!DOCTYPE html>
+<html lang="it" dir="ltr">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2232/2232688.png">
+    <link rel="Stylesheet" type="text/css" href="~/css/MyAccount/style.css">
+    <script src="https://kit.fontawesome.com/94a5d63a99.js" crossorigin="anonymous"></script>
+    <script src="~/js/MyAccount/Menu.js"></script>
+    <title>Libreria Web</title>
+</head>
+<body>
+    <script>
+        function confermaEliminazione() {
+            var conferma = confirm("Sei sicuro di voler Eliminare?");
+
+            if (conferma) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+    <header>
+        <div class="topnav">
+            <a href="/Home/Index">Home</a>
+            <a href="/Libri/Elenco">Lista Libri</a>
+            <a href="/Home/Contatti">Contatti</a>
+            <a href="/Home/AboutUs">Chi Siamo</a>
+            @if (LoginController.amministratoreLoggato != null)
+            {
+                <a href="/Libri/NuovoLibro">Aggiungi Libro</a>
+            }
+            @if (LoginController.amministratoreLoggato == null && LoginController.utenteLoggato == null)
+            {
+                <a href="/Login/Login" id="accedi">Accedi/Registrati</a>
+            }
+            @if (LoginController.amministratoreLoggato != null)
+            {
+                <a href="/Login/Logout" id="accedi">Esci</a>
+                <a href="/MyAccount/MyAccountAdmin" id="accedi" class="active">Sei dentro come @LoginController.amministratoreLoggato.Username</a>
+            }
+            @if (LoginController.utenteLoggato != null)
+            {
+                <a href="/Login/Logout" id="accedi">Esci</a>
+                <a class="active" href="/MyAccount/MyAccountUtente" id="accedi">Sei dentro come @LoginController.utenteLoggato.Username</a>
+            }
+
+            <a onclick="MostraTextBox()" onmouseleave="NascondiTextBox()" id="cerca"><i class="fa-solid fa-magnifying-glass"><input id="txtfind" type="text" onfocus="reindireizza()"></input></i></a>
+        </div>
+    </header>
+    <main>
+        <div id="schedautente">
+            <div>
+                <div id="nominativoutente">
+                    <h1>@(((Utente)Model).Nome)</h1>
+                    <h1>@(((Utente)Model).Cognome)</h1>
+                </div>
+                <div id="datiutente">
+                    <h3>Username: @(((Utente)Model).Username)</h3>
+                    <h3>indirizzo Email: @(((Utente)Model).Email)</h3>
+                    <h3>Data di nascita: @(((Utente)Model).Dob.ToString("dd-MM-yyyy"))</h3>
+                    <h3>Posizione: @(((Utente)Model).Indirizzo)</h3>
+                </div>
+            </div>
+            <div class="buttonnegozio">
+                <a href="/MyAccount/ModificaProfiloUtente"><input type="button" value="Modifica Profilo"></a>
+                <a href="/MyAccount/EliminaProfilo?id=@LoginController.utenteLoggato.Id" onclick="return confermaEliminazione()"><input type="button" value="Elimina Profilo"></a>
+                <a href="/MyAccount/PreferitiUtente" id="dettaglibutton"><input type="button" value="Visualizza Preferiti"></a>
+                <a href="/MyAccount/StoricoPrestiti" id="dettaglibutton"><input type="button" value="Visualizza Prestiti"></a>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div id="footer">
+            <p>© Copyright 2023 by Generation - Proudly powered by Gruppo-1®</p>
+        </div>
+    </footer>
+</body>
+</html>
